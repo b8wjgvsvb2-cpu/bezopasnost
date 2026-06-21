@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Если рядом партнёр причиняет боль</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FFF9F7;
+    --bg-soft:#FBEDEA;
+    --bg-card:#FFFFFF;
+    --rose:#C97B86;
+    --rose-light:#E8B9C0;
+    --rose-pale:#F4DADD;
+    --wine:#6B2737;
+    --wine-deep:#4E1B28;
+    --text:#3A2E30;
+    --text-muted:#8C7377;
+    --line:#EAD6D2;
+    --shadow: 0 12px 32px -16px rgba(107,39,55,0.18);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',system-ui,sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces',Georgia,serif;
+    font-weight:600;
+    line-height:1.15;
+    color:var(--wine-deep);
+    margin:0 0 .5em;
+  }
+  a{color:var(--wine);}
+  p{margin:0 0 1em;}
+  .wrap{max-width:780px;margin:0 auto;padding:0 24px;}
+  ::selection{background:var(--rose-light);color:var(--wine-deep);}
+  :focus-visible{outline:3px solid var(--wine);outline-offset:3px;border-radius:4px;}
+
+  /* ---------- top safety bar ---------- */
+  .safety-bar{
+    background:var(--wine-deep);
+    color:#fff;
+    font-size:.85rem;
+    padding:10px 16px;
+    text-align:center;
+  }
+  .safety-bar b{font-weight:600;}
+
+  /* ---------- quick exit ---------- */
+  .quick-exit{
+    position:fixed;
+    top:14px;
+    right:14px;
+    z-index:999;
+    background:var(--wine);
+    color:#fff;
+    border:none;
+    padding:10px 16px;
+    border-radius:999px;
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:.85rem;
+    cursor:pointer;
+    box-shadow:var(--shadow);
+    display:flex;
+    align-items:center;
+    gap:6px;
+    text-decoration:none;
+    transition:transform .15s ease, background .15s ease;
+  }
+  .quick-exit:hover{background:var(--wine-deep);transform:translateY(-1px);}
+
+  /* ---------- nav ---------- */
+  nav.quicknav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(255,249,247,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+    overflow-x:auto;
+    white-space:nowrap;
+    padding:10px 0;
+  }
+  nav.quicknav .wrap{display:flex;gap:18px;}
+  nav.quicknav a{
+    font-size:.82rem;
+    font-weight:600;
+    text-decoration:none;
+    color:var(--text-muted);
+    padding:4px 2px;
+    border-bottom:2px solid transparent;
+  }
+  nav.quicknav a:hover{color:var(--wine);border-color:var(--rose-light);}
+
+  /* ---------- hero ---------- */
+  header.hero{padding:56px 0 28px;}
+  .eyebrow{
+    display:inline-block;
+    font-size:.78rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    font-weight:700;
+    color:var(--rose);
+    background:var(--rose-pale);
+    padding:6px 14px;
+    border-radius:999px;
+    margin-bottom:18px;
+  }
+  h1{font-size:clamp(1.9rem,5vw,2.6rem);max-width:14ch;}
+  .lead{font-size:1.08rem;color:var(--text);max-width:58ch;}
+  .lead.muted{color:var(--text-muted);}
+
+  /* ---------- icon ---------- */
+  .icon{width:30px;height:30px;flex:none;color:var(--wine);}
+  .icon-lg{width:40px;height:40px;}
+
+  /* ---------- emergency card ---------- */
+  .emergency{
+    background:var(--wine-deep);
+    color:#FBEDEA;
+    border-radius:20px;
+    padding:28px 28px 24px;
+    margin:8px 0 48px;
+    box-shadow:var(--shadow);
+  }
+  .emergency h2{color:#fff;font-size:1.3rem;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+  .emergency .icon{color:#F4C6CC;}
+  .emergency ul{margin:0;padding-left:0;list-style:none;}
+  .emergency li{
+    padding:8px 0 8px 28px;
+    position:relative;
+    border-top:1px solid rgba(255,255,255,0.12);
+    font-size:.97rem;
+  }
+  .emergency li:first-child{border-top:none;}
+  .emergency li::before{
+    content:"";
+    position:absolute;left:0;top:16px;
+    width:8px;height:8px;border-radius:50%;
+    background:var(--rose-light);
+  }
+  .emergency .call{
+    color:#fff;font-family:'Fraunces',serif;font-weight:600;
+  }
+
+  /* ---------- section rail (signature element) ---------- */
+  section{
+    position:relative;
+    padding:30px 0 30px 0;
+    margin-left:0;
+  }
+  .stage{
+    display:flex;
+    gap:22px;
+    align-items:flex-start;
+  }
+  .stage-rail{
+    flex:none;
+    width:28px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding-top:6px;
+  }
+  .stage-dot{
+    width:14px;height:14px;border-radius:50%;
+    background:var(--bg);
+    border:2.5px solid var(--rose);
+    flex:none;
+  }
+  .stage-thread{
+    flex:1;
+    width:2px;
+    background:repeating-linear-gradient(to bottom, var(--rose-light) 0 6px, transparent 6px 11px);
+    margin-top:4px;
+  }
+  .stage-body{flex:1; min-width:0; padding-bottom:6px;}
+  .stage-label{
+    font-size:.76rem;text-transform:uppercase;letter-spacing:.07em;
+    color:var(--rose);font-weight:700;margin-bottom:6px;
+  }
+
+  /* ---------- card ---------- */
+  .card{
+    background:var(--bg-card);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:22px 24px;
+    margin:14px 0;
+    box-shadow:var(--shadow);
+  }
+  .card h3{font-size:1.05rem;display:flex;gap:12px;align-items:center;margin-bottom:10px;}
+  .card-soft{background:var(--bg-soft);border-color:var(--rose-pale);}
+
+  ul.tick{list-style:none;padding:0;margin:0;}
+  ul.tick li{
+    padding:7px 0 7px 26px;
+    position:relative;
+  }
+  ul.tick li::before{
+    content:"";
+    position:absolute;left:0;top:14px;
+    width:9px;height:9px;
+    border-radius:2px;
+    background:var(--rose);
+    transform:rotate(45deg);
+  }
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media (max-width:640px){.grid2{grid-template-columns:1fr;}}
+
+  /* ---------- cycle diagram ---------- */
+  .cycle{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin:18px 0 6px;
+  }
+  @media (max-width:640px){.cycle{grid-template-columns:1fr 1fr;}}
+  .cycle .step{
+    background:var(--bg-soft);
+    border:1px solid var(--rose-pale);
+    border-radius:14px;
+    padding:14px 12px;
+    font-size:.85rem;
+  }
+  .cycle .step b{display:block;font-family:'Fraunces',serif;color:var(--wine-deep);font-size:.95rem;margin-bottom:4px;}
+  .cycle-arrow{text-align:center;color:var(--rose);font-size:.8rem;margin-top:4px;}
+
+  /* ---------- hotline list ---------- */
+  .hotline{
+    display:flex;justify-content:space-between;align-items:center;gap:14px;
+    padding:14px 0;border-top:1px solid var(--line);
+  }
+  .hotline:first-of-type{border-top:none;}
+  .hotline .num{font-family:'Fraunces',serif;font-weight:600;color:var(--wine-deep);font-size:1.15rem;white-space:nowrap;}
+  .hotline .desc{font-size:.88rem;color:var(--text-muted);}
+
+  /* ---------- telegram cta ---------- */
+  .cta{
+    background:linear-gradient(135deg,var(--rose) 0%, var(--wine) 100%);
+    color:#fff;
+    border-radius:20px;
+    padding:30px 28px;
+    text-align:center;
+    margin:20px 0 10px;
+    box-shadow:var(--shadow);
+  }
+  .cta h2{color:#fff;}
+  .cta p{color:#FBEDEA;}
+  .cta a.btn{
+    display:inline-block;
+    background:#fff;
+    color:var(--wine-deep);
+    font-weight:700;
+    text-decoration:none;
+    padding:13px 26px;
+    border-radius:999px;
+    margin-top:10px;
+  }
+
+  footer{
+    padding:36px 0 60px;
+    color:var(--text-muted);
+    font-size:.82rem;
+    border-top:1px solid var(--line);
+    margin-top:30px;
+  }
+
+  /* ---------- reveal animation (visible by default for reliability) ---------- */
+  .reveal{opacity:1;transform:none;}
+
+  /* ---------- print / quick-look safety ---------- */
+  @media print{
+    .quick-exit, nav.quicknav, .safety-bar{display:none !important;}
+    body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  }
+</style>
+</head>
+<body>
+
+<div class="safety-bar">🔒 Если этот экран может увидеть кто-то ещё — кнопка <b>«Быстро закрыть»</b> справа вверху или клавиша <b>Esc</b> мгновенно уведут со страницы.</div>
+
+<a class="quick-exit" id="quickExit" href="https://www.google.com" target="_self" aria-label="Быстро закрыть страницу">✕ Быстро закрыть</a>
+
+<nav class="quicknav">
+  <div class="wrap">
+    <a href="#opasnost">Опасность сейчас</a>
+    <a href="#priznaki">Ранние признаки</a>
+    <a href="#povedenie">Как себя вести</a>
+    <a href="#plan">План ухода</a>
+    <a href="#zvonit">Куда звонить</a>
+    <a href="#posle">После ухода</a>
+    <a href="#podderzhka">Поддержка</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <header class="hero">
+    <span class="eyebrow">Гид по безопасности</span>
+    <h1>Если рядом партнёр причиняет тебе боль</h1>
+    <p class="lead">Как заметить абьюз на ранней стадии, как вести себя, чтобы быть в безопасности, пока ты ещё не готова уйти, и как шаг за шагом подготовить уход.</p>
+    <p class="lead muted">Читай в своём темпе. Не обязательно делать всё и сразу — даже один прочитанный раздел уже шаг вперёд.</p>
+  </header>
+
+  <section id="opasnost">
+    <div class="emergency">
+      <h2>
+        <svg class="icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="4" width="20" height="40" rx="4"/><line x1="20" y1="10" x2="28" y2="10"/><circle cx="24" cy="38" r="1.6" fill="currentColor"/></svg>
+        Если опасность прямо сейчас
+      </h2>
+      <ul>
+        <li><span class="call">Звони 112 или 102.</span> Назови адрес сразу, в начале разговора — это главное, что должны успеть услышать.</li>
+        <li>Иди в комнату, дверь которой закрывается на замок, и возьми с собой телефон. Старайся, чтобы это была не кухня, ванная или гараж — там чаще оказываются предметы, которыми можно причинить вред.</li>
+        <li>Если получается — выйди из дома под любым предлогом (мусор, магазин) и иди туда, где есть люди.</li>
+        <li>Если заранее договорилась о кодовом слове с соседом или другом — используй его сейчас.</li>
+        <li>Не старайся переспорить или «успокоить». Цель — не доказать правоту, а оказаться в безопасности.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="reveal">
+    <div class="stage">
+      <div class="stage-rail"><div class="stage-dot"></div><div class="stage-thread"></div></div>
+      <div class="stage-body">
+        <div class="card card-soft">
+          <h3>
+            <svg class="icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M24 41C10 31 4 22 4 14C4 8 9 4 15 4C19 4 22 6 24 10C26 6 29 4 33 4C39 4 44 8 44 14C44 22 38 31 24 41Z"/></svg>
+            Это не твоя вина
+          </h3>
+          <p>Абьюз — это выбор того, кто его совершает, а не результат твоего поведения, характера или ошибок. Можно любить человека и одновременно быть с ним в опасности — это не противоречие, и это не делает тебя слабой или глупой.</p>
+          <p>Большинству женщин требуется несколько попыток, прежде чем получается уйти окончательно. Это нормальная часть процесса, а не провал.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="priznaki" class="reveal">
+    <div class="stage">
+      <div class="stage-rail"><div class="stage-dot"></div><div class="stage-thread"></div></div>
+      <div class="stage-body">
+        <div class="stage-label">Замечать раньше</div>
+        <h2>Как распознать абьюз на ранней стадии</h2>
+        <p class="lead muted">Ранние признаки часто маскируются под «сильную любовь» или заботу — поэтому их легко не заметить.</p>
+
+        <div class="grid2">
+          <div class="card">
+            <h3>Скорость и качели чувств</h3>
+            <ul class="tick">
+              <li>Слишком быстрое сближение, разговоры о будущем с первых недель</li>
+              <li>Резкие перепады: то холодность и обиды, то чрезмерная нежность</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Контроль под видом заботы</h3>
+            <ul class="tick">
+              <li>«Где была, с кем, почему так долго» — подаётся как тревога, а не контроль</li>
+              <li>Постепенно отговаривает от встреч с друзьями и семьёй</li>
+              <li>Настаивает на общих паролях, проверяет телефон</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Обесценивание</h3>
+            <ul class="tick">
+              <li>Критика «в шутку», подрывающая уверенность в себе</li>
+              <li>Сравнение с другими не в твою пользу</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Перекладывание вины</h3>
+            <ul class="tick">
+              <li>После ссоры виноватой почему-то оказываешься ты</li>
+              <li>«Тебе показалось», «я такого не говорил» — газлайтинг</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Цикл насилия</h3>
+          <p>Абьюз редко выглядит как постоянное насилие — чаще это повторяющийся круг, который со временем ускоряется.</p>
+          <div class="cycle">
+            <div class="step"><b>1. Напряжение</b>Раздражение, придирки, ты «ходишь по льду»</div>
+            <div class="step"><b>2. Эпизод</b>Вспышка — крик, оскорбления, насилие</div>
+            <div class="step"><b>3. Медовый месяц</b>Извинения, подарки, обещания измениться</div>
+            <div class="step"><b>4. Затишье</b>Спокойствие — и круг начинается заново</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="povedenie" class="reveal">
+    <div class="stage">
+      <div class="stage-rail"><div class="stage-dot"></div><div class="stage-thread"></div></div>
+      <div class="stage-body">
+        <div class="stage-label">Пока ты ещё рядом</div>
+        <h2>Как себя вести, пока ты готовишь план</h2>
+        <div class="card">
+          <ul class="tick">
+            <li>Цель в момент агрессии — не «победить в споре», а пережить его в безопасности</li>
+            <li>Заранее замечай, какие комнаты безопаснее — с выходом и без предметов, которыми можно причинить вред</li>
+            <li>Держи телефон заряженным и при себе, знай, как быстро набрать 112</li>
+            <li>Договорись с соседом или другом о кодовом слове или сигнальном сообщении, которое будет значить «звони в полицию»</li>
+            <li>Фиксируй случившееся незаметно: дата, что произошло — и сразу отправляй себе на отдельную почту или доверенному человеку, не храни в общем телефоне</li>
+            <li>Доверяй своим ощущениям: если кажется, что «надвигается» — это не паранойя, это твой опыт</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="plan" class="reveal">
+    <div class="stage">
+      <div class="stage-rail"><div class="stage-dot"></div><div class="stage-thread"></div></div>
+      <div class="stage-body">
+        <div class="stage-label">Подготовка</div>
+        <h2>План ухода: что подготовить заранее</h2>
+        <p class="lead muted">Готовить план — не значит уходить прямо сейчас. Это значит иметь выбор, когда он понадобится.</p>
+
+        <div class="card">
+          <h3><svg class="icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="6" width="20" height="36" rx="1.5"/><circle cx="26" cy="24" r="1.4" fill="currentColor"/><path d="M32 24h10M37 19l5 5-5 5"/></svg>Документы</h3>
+          <p>Паспорт, СНИЛС, полис ОМС, свидетельства о браке и о рождении детей, банковские карты, водительское удостоверение. Сфотографируй каждый и отправь копии себе на отдельную почту или доверенному человеку — не в общее облако.</p>
+        </div>
+        <div class="card">
+          <h3>Деньги</h3>
+          <p>Откладывай понемногу отдельно от общего бюджета — пусть это будет небольшая сумма. Знай, на что её хватит: такси, билет, первые дни.</p>
+        </div>
+        <div class="card">
+          <h3><svg class="icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="18" width="32" height="22" rx="3"/><path d="M18 18v-6a6 6 0 0 1 12 0v6"/><line x1="8" y1="27" x2="40" y2="27"/></svg>Тревожный чемоданчик</h3>
+          <p>Смена одежды, лекарства, зарядка для телефона, копии документов, немного денег. Храни не дома — у подруги, в машине, на работе, в камере хранения.</p>
+        </div>
+        <div class="card">
+          <h3><svg class="icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="8"/><line x1="23" y1="20" x2="40" y2="37"/><line x1="34" y1="31" x2="29" y2="36"/><line x1="38" y1="35" x2="34" y2="39"/></svg>Куда уйти</h3>
+          <p>Заранее узнай телефон и адрес кризисного центра в своём городе или подумай, к кому из близких можно приехать без предупреждения, в любое время.</p>
+        </div>
+        <div class="card">
+          <h3>Дети и животные</h3>
+          <p>Собери их документы тоже. Продумай, с кем их оставить на первые часы. Не оставляй питомцев дома — иногда ими пользуются как рычагом давления, чтобы заставить вернуться.</p>
+        </div>
+        <div class="card">
+          <h3>Безопасная связь</h3>
+          <p>Если возможно — отдельный номер или почта, не привязанные к общим устройствам, iCloud или Google-аккаунту. Выключи геолокацию в приложениях, которыми пользуетесь оба.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="zvonit" class="reveal">
+    <div class="stage">
+      <div class="stage-rail"><div class="stage-dot"></div><div class="stage-thread"></div></div>
+      <div class="stage-body">
+        <div class="stage-label">Если решилась обратиться</div>
+        <h2>Куда звонить и что говорить</h2>
+        <div class="card">
+          <div class="hotline"><span class="num">8&nbsp;800&nbsp;7000&nbsp;600</span><span class="desc">Всероссийский телефон доверия для женщин, пострадавших от насилия. Бесплатно, круглосуточно.</span></div>
+          <div class="hotline"><span class="num">112 / 102</span><span class="desc">Экстренная помощь и полиция при непосредственной опасности.</span></div>
+          <div class="hotline"><span class="num">+7 499 901&#8209;02&#8209;01</span><span class="desc">Центр «Сёстры» — поддержка переживших сексуализированное насилие.</span></div>
+        </div>
+        <div class="card">
+          <h3>Как говорить с диспетчером</h3>
+          <ul class="tick">
+            <li>Назови адрес в первые секунды разговора</li>
+            <li>Говори коротко и по фактам: «мне угрожает партнёр, нужна помощь, адрес такой-то»</li>
+            <li>После физического насилия попроси зафиксировать обращение — номер талона-уведомления</li>
+          </ul>
+        </div>
+        <div class="card card-soft">
+          <h3>Если в полиции отказываются принимать заявление</h3>
+          <p>Это незаконно. Попроси талон-уведомление, обратись к старшему по смене или сразу свяжись с кризисным центром за бесплатным юридическим сопровождением. После любого физического вреда стоит обратиться в травмпункт и попросить зафиксировать повреждения — это может понадобиться позже как доказательство.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="reveal">
+    <div class="stage">
+      <div class="stage-rail"><div class="stage-dot"></div><div class="stage-thread"></div></div>
+      <div class="stage-body">
+        <div class="card">
+          <h3><svg class="icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 24C6 24 14 12 24 12C34 12 42 24 42 24C42 24 34 36 24 36C14 36 6 24 6 24Z"/><circle cx="24" cy="24" r="5"/><line x1="9" y1="9" x2="39" y2="39"/></svg>Цифровая безопасность</h3>
+          <ul class="tick">
+            <li>Если этим устройством может пользоваться партнёр — открывай такие страницы в режиме инкогнито и удаляй историю после прочтения</li>
+            <li>Заведи отдельную почту, не связанную с общими аккаунтами, для переписки и хранения копий документов</li>
+            <li>Проверь и выключи геометки в соцсетях и общий доступ к геолокации</li>
+            <li>Кнопка «Быстро закрыть» вверху страницы и клавиша Esc уведут отсюда мгновенно</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="posle" class="reveal">
+    <div class="stage">
+      <div class="stage-rail"><div class="stage-dot"></div></div>
+      <div class="stage-body">
+        <div class="stage-label">Дальше</div>
+        <h2>Если ты уже ушла: что дальше</h2>
+
+        <div class="card card-soft">
+          <h3><svg class="icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="14" cy="22" rx="9" ry="6" transform="rotate(-25 14 22)"/><ellipse cx="34" cy="26" rx="9" ry="6" transform="rotate(-25 34 26)"/><line x1="20" y1="20" x2="24" y2="26"/><line x1="24" y1="20" x2="28" y2="26"/></svg>Важно честно сказать о законе</h3>
+          <p>В России на сегодняшний день нет отдельного закона об охранных ордерах — формального «запрета приближаться» получить нельзя. Это реальный пробел, и злиться на него — нормально. Но это не значит, что у тебя нет инструментов.</p>
+        </div>
+
+        <div class="card">
+          <ul class="tick">
+            <li>Подай заявление в полицию и проси фиксировать каждый случай угроз или преследования — это создаёт документальный след на случай эскалации</li>
+            <li>Сохраняй все сообщения с угрозами — делай скриншоты, не удаляй переписку</li>
+            <li>Смени пароли везде, где он мог знать старые; рассмотри смену номера телефона</li>
+            <li>По возможности смени замки или поживи первое время там, где он тебя не найдёт</li>
+            <li>Меняй привычный маршрут — на работу, к дому, в магазин — на первые недели</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Дай себе время</h3>
+          <p>После ухода обычно приходит не один чистый «облегчающий» поток чувств, а смесь — грусть, вина, злость, тоска по тому, что было хорошим в отношениях. Это нормальная часть восстановления, а не признак того, что ты ошиблась. Психологическая поддержка в этот период — не роскошь, а часть пути.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="podderzhka" class="reveal">
+    <div class="cta">
+      <h2>Если нужна поддержка рядом</h2>
+      <p>Материалы, поддержка и возможность написать лично — в Telegram-канале «Женские права».</p>
+      <a class="btn" href="https://t.me/volynskaya_zhenskie_prava" target="_blank" rel="noopener">Перейти в канал →</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>Это общий информационный гайд, а не замена юридической, медицинской или психологической помощи. Для плана, учитывающего именно твою ситуацию, обратись в кризисный центр по телефону 8&nbsp;800&nbsp;7000&nbsp;600 — там помогут бесплатно и конфиденциально.</p>
+    <p>Поддержка и материалы: <a href="https://t.me/volynskaya_zhenskie_prava" target="_blank" rel="noopener">t.me/volynskaya_zhenskie_prava</a></p>
+  </footer>
+
+</div>
+
+<script>
+  function quickExit(){
+    window.location.replace('https://www.google.com');
+  }
+  document.getElementById('quickExit').addEventListener('click', quickExit);
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){ quickExit(); }
+  });
+
+  if('IntersectionObserver' in window){
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('show'); obs.unobserve(en.target); }
+      });
+    }, {threshold:0.12});
+    document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('show'); });
+  }
+</script>
+
+</body>
+</html>
